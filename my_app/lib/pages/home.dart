@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/addChild.dart';
+import 'package:my_app/pages/childPage.dart';
 import 'package:my_app/pages/parentPage.dart';
 // Import the relevant pages or functionalities
 // import 'add_child_page.dart';
@@ -51,6 +53,10 @@ class HomePage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       // Navigation logic for Child Profile
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ChildPage()),
+                      );
                     },
                     child: Text('Child Profile'),
                   ),
@@ -67,6 +73,10 @@ class HomePage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         // Add Child logic
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddChildPage()),
+                        );
                       },
                       child: Text('Add Child'),
                     ),
