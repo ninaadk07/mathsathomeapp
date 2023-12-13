@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/pages/childItem1.dart';
+import 'package:my_app/pages/countingItem.dart';
+import 'package:my_app/pages/compareItem.dart';
 import 'package:my_app/pages/home.dart';
 
 // Change the cases and its corresponding pages
@@ -9,10 +10,10 @@ class ChildPage extends StatelessWidget {
 
     switch (taskIndex) {
       case 0:
-        taskPage = ChildrenItem1Page();
+        taskPage = CountingItemsPage();
         break;
       case 1:
-        taskPage = HomePage();
+        taskPage = CompareItemsPage();
         break;
       case 2:
         taskPage = HomePage();

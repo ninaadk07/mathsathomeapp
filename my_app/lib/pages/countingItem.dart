@@ -3,12 +3,12 @@ import 'dart:math' as math;
 
 import 'package:my_app/pages/childPage.dart';
 
-class ChildrenItem1Page extends StatefulWidget {
+class CountingItemsPage extends StatefulWidget {
   @override
-  _ChildrenItem1PageState createState() => _ChildrenItem1PageState();
+  _CountingItemsPageState createState() => _CountingItemsPageState();
 }
 
-class _ChildrenItem1PageState extends State<ChildrenItem1Page> {
+class _CountingItemsPageState extends State<CountingItemsPage> {
   static const int totalItems = 10;
   int questionCount = 0;
   late int correctCount;
