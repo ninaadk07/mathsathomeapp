@@ -22,10 +22,9 @@ class _CompareItemsPageState extends State<CompareItemsPage> {
   }
 
   void randomizeItemCount() {
-    leftItemCount = math.Random().nextInt(6) + 1; // Random number between 1 and 6
+    leftItemCount = math.Random().nextInt(6) + 1;
     rightItemCount = math.Random().nextInt(6) + 1;
     while (rightItemCount == leftItemCount) {
-      // Ensure the number of items is different on each side
       rightItemCount = math.Random().nextInt(6) + 1;
     }
   }
@@ -69,42 +68,27 @@ class _CompareItemsPageState extends State<CompareItemsPage> {
           ),
           Expanded(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Expanded Left side items with GestureDetector
                 Expanded(
                   child: GestureDetector(
                     onTap: () => verifyAnswer(true),
-                    child: Container(
-                      color: Colors.transparent, // Make the hitbox visible for debugging
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(leftItemCount, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: CircleAvatar(backgroundColor: Colors.blue),
-                          );
-                        }),
-                      ),
-                    ),
+                    behavior: HitTestBehavior.opaque, // Ensure the gesture detector covers the entire expanded area
+                    child: buildItemColumn(leftItemCount, Colors.blue),
                   ),
+                ),
+                VerticalDivider(
+                  color: Colors.grey,
+                  width: 1,
+                  thickness: 1,
                 ),
                 // Expanded Right side items with GestureDetector
                 Expanded(
                   child: GestureDetector(
                     onTap: () => verifyAnswer(false),
-                    child: Container(
-                      color: Colors.transparent, // Make the hitbox visible for debugging
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(rightItemCount, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: CircleAvatar(backgroundColor: Colors.red),
-                          );
-                        }),
-                      ),
-                    ),
+                    behavior: HitTestBehavior.opaque, // Ensure the gesture detector covers the entire expanded area
+                    child: buildItemColumn(rightItemCount, Colors.red),
                   ),
                 ),
               ],
@@ -112,6 +96,18 @@ class _CompareItemsPageState extends State<CompareItemsPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Column buildItemColumn(int itemCount, Color color) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(itemCount, (index) {
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: CircleAvatar(backgroundColor: color),
+        );
+      }),
     );
   }
 }
