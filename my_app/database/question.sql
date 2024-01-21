@@ -1,0 +1,6 @@
+CREATE TABLE Questions (
+    ID INT IDENTITY(1,1) PRIMARY KEY,
+    TaskID INT,
+    Type NVARCHAR(255),
+    FOREIGN KEY (TaskID) REFERENCES Task(ID)
+);
