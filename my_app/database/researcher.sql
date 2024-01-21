@@ -1,0 +1,5 @@
+CREATE TABLE Researcher (
+    ID INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(255) NOT NULL,
+    Occupation NVARCHAR(255)
+);
