@@ -3,6 +3,9 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
+if __name__ == '__main__':
+    app.run(debug=True)
+    
 # Database connection function
 def get_db_connection():
     conn = pyodbc.connect('DRIVER={ODBC Driver 18 for SQL Server};'
