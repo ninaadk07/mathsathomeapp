@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Database connection function
 def get_db_connection():
-    conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
+    conn = pyodbc.connect('DRIVER={ODBC Driver 18 for SQL Server};'
                           'SERVER=mathsathome.database.windows.net;'
                           'DATABASE=mathsathome;'
                           'UID=Team44AEN;'
