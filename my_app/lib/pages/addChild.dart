@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../http_requests/addchild.dart';
+
 
 class AddChildPage extends StatefulWidget {
   @override
@@ -137,23 +141,21 @@ class _AddChildPageState extends State<AddChildPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Process data
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Text('Form submitted'),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text('OK'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    // Collect form data
+                    final childData = {
+                      'FamilyID': 1, // this is hardcoded now for test purposes, but goal is to choose the family ID of the parent that's signing up the child
+                      'Name': _nameController.text,
+                      'DOB': _dateOfBirthController.text,
+                      'Sex': _sex,
+                      'Country': _country,
+                      'LevelOfEducation': _educationLevel,
+                    };
+
+                    // Send data to the API
+                    addChild(childData);
+
+                    // Show confirmation dialog
+                    // ...
                   }
                 },
                 child: Text('Submit'),
