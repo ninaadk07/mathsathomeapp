@@ -1,6 +1,10 @@
+// edit child probably needs to be changed so you can select which child
+// child page will need to be made into a loop depending on how many children there are
+
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/addChild.dart';
 import 'package:my_app/pages/childPage.dart';
+import 'package:my_app/pages/editChild.dart';
 import 'package:my_app/pages/parentPage.dart';
 // Import the relevant pages or functionalities
 // import 'add_child_page.dart';
@@ -84,7 +88,10 @@ class HomePage extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        // Edit Child logic
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => EditChildPage()), // need to change
+                        // );
                       },
                       child: Text('Edit Child'),
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/home.dart';
+import 'package:my_app/pages/register.dart';
 // import 'package:my_app/pages/register.dart'; // Import your registration page
 
 class LoginPage extends StatefulWidget {
@@ -70,8 +71,10 @@ class _LoginPageState extends State<LoginPage> {
                 Text("Don't have an account? "),
                 TextButton(
                   onPressed: () {
-                    // Navigate to registration page
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()),
+                    );
                   },
                   child: Text('Register'),
                 ),
