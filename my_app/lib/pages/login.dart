@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/home.dart';
 import 'package:my_app/pages/register.dart';
-// import 'package:my_app/pages/register.dart'; // Import your registration page
+import '../http_requests/addRequests.dart'; // Ensure this import is correct
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,7 +11,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _isUser = true; // Toggle state
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +32,9 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch, // Aligns children horizontally
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Center( // Center the ToggleButtons
+            Center(
               child: ToggleButtons(
                 children: <Widget>[
                   Padding(
@@ -47,20 +56,31 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 20),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Username'),
+              controller: _emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your Email';
+                }
+                return null;
+              },
             ),
             TextFormField(
+              controller: _passwordController,
               decoration: InputDecoration(labelText: 'Password'),
               obscureText: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a password';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
                 // Add login logic based on _isUser
+                performLogin();
               },
               child: Text('Login as ${_isUser ? 'User' : 'Researcher'}'),
             ),
@@ -85,4 +105,35 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+Future<void> performLogin() async {
+  final loginResult = await login(_emailController.text, _passwordController.text);
+
+  if (loginResult == 'Login successful') {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+  } else {
+    // Display an alert dialog with the error message
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Please check your email or password'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
 }

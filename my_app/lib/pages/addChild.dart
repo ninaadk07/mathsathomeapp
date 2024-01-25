@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../http_requests/addchild.dart';
+import '../http_requests/addRequests.dart';
+import '../sessions/UserSession.dart';
 
 
 class AddChildPage extends StatefulWidget {
@@ -139,11 +140,15 @@ class _AddChildPageState extends State<AddChildPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    // Collect form data
+                    final familyID = await secureStorage.read(key: 'familyID');
+                    if (familyID == null) {
+                      // Prompt the user to log in, or handle the error
+                      return;
+                    }
                     final childData = {
-                      'FamilyID': 1, // this is hardcoded now for test purposes, but goal is to choose the family ID of the parent that's signing up the child
+                      'FamilyID': familyID, 
                       'Name': _nameController.text,
                       'DOB': _dateOfBirthController.text,
                       'Sex': _sex,
@@ -152,6 +157,7 @@ class _AddChildPageState extends State<AddChildPage> {
                     };
 
                     // Send data to the API
+                    print("Child data: $childData");
                     addChild(childData);
 
                     // Show confirmation dialog

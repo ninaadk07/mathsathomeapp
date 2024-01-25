@@ -3,9 +3,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/home.dart'; 
+import '../http_requests/addRequests.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -111,35 +112,38 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    // process data
-                    // send data t backend for authentication
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
+                    // Collect data
+                    var userData = {
+                      'username': _usernameController.text,
+                      'email': _emailController.text,
+                      'password': _passwordController.text,
+                      'isUser': _isUser,
+                    };
+
+                    // Call your API to register the user
+                    bool success = await registerUser(userData);
+
+                    if (success) {
+                      // Go to the HomePage or show a success message
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    } else {
+                      // Show an error message
+                      // Consider showing a dialog or a snackbar to inform the user
+                    }
                   }
                 },
                 child: Text('Register as ${_isUser ? 'User' : 'Researcher'}'),
               ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("Already have an account? "),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('Login'),
+              // The following closing brackets should align with the Widget tree structure
+                        ],
+                      ),
+                    ),
                   ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+                );
+              }
 }

@@ -1,4 +1,6 @@
 CREATE TABLE Family (
     ID INT IDENTITY(1,1) PRIMARY KEY,
-    -- Add additional attributes here
+    Username NVARCHAR(255) UNIQUE NOT NULL,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    Email NVARCHAR(255) UNIQUE NOT NULL,
 );
