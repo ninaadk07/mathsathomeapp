@@ -143,10 +143,6 @@ class _AddChildPageState extends State<AddChildPage> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final familyID = await secureStorage.read(key: 'familyID');
-                    if (familyID == null) {
-                      // Prompt the user to log in, or handle the error
-                      return;
-                    }
                     final childData = {
                       'FamilyID': familyID, 
                       'Name': _nameController.text,
@@ -157,7 +153,6 @@ class _AddChildPageState extends State<AddChildPage> {
                     };
 
                     // Send data to the API
-                    print("Child data: $childData");
                     addChild(childData);
 
                     // Show confirmation dialog

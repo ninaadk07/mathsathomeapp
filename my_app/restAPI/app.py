@@ -35,29 +35,40 @@ def get_children():
 
 @app.route('/database/child', methods=['POST'])
 def add_child():
-    # Authenticate and get parent's FamilyID. This is just an example.
-    # In a real application, you would extract this from the session or token.
-    parent_family_id = request.headers.get('familyID')
-    if not parent_family_id:
-        return jsonify({'error': 'FamilyID header required'}), 400
-    
     new_child = request.json
+    parent_family_id = request.headers.get('FamilyID')
+
+    try:
+        parent_family_id = int(parent_family_id)
+    except (TypeError, ValueError):
+        return jsonify({'error': 'Invalid FamilyID'}), 400
+
     conn = get_db_connection()
     cursor = conn.cursor()
+
     query = '''
     INSERT INTO Child (FamilyID, Name, DOB, Sex, Country, LevelOfEducation)
     VALUES (?, ?, ?, ?, ?, ?);
     '''
-    cursor.execute(query, (
-        parent_family_id,
-        new_child['Name'],
-        new_child['DOB'],
-        new_child['Sex'],
-        new_child['Country'],
-        new_child['LevelOfEducation']
-    ))
-    conn.commit()
-    return jsonify({'message': 'Child added'}), 201
+    
+    try:
+        cursor.execute(query, (
+            parent_family_id,
+            new_child['Name'],
+            new_child['DOB'],
+            new_child['Sex'],
+            new_child['Country'],
+            new_child['LevelOfEducation']
+        ))
+        conn.commit()
+        return jsonify({'message': 'Child added'}), 201
+    except pyodbc.Error as e:
+        conn.rollback()
+        print("Database error:", e)  # Print the error details
+        return jsonify({'error': 'Database error', 'details': str(e)}), 500
+    finally:
+        conn.close()
+
 
 @app.route('/database/register', methods=['POST'])
 def register_user():
