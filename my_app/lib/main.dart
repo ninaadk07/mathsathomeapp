@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/home.dart';
 import 'package:my_app/pages/login.dart';
 
 // import 'src/app.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(),
-      home: LoginPage()
+      home: HomePage() // quick fix
     );
   }
 }
