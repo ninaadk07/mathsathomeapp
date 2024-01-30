@@ -2,7 +2,7 @@
 // user type is isUser. True if user and False if researcher
 
 import 'package:flutter/material.dart';
-import 'package:my_app/pages/home.dart'; 
+import 'package:my_app/pages/login.dart'; 
 import '../http_requests/addRequests.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -129,7 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       // Go to the HomePage or show a success message
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     } else {
                       // Show an error message
